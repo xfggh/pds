@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import App from './App';
+import store from './store/index'
 
 // 引入路由
 import router from './router/index';
@@ -11,5 +12,6 @@ Vue.use(lyTab);
 new Vue({
     el: '#app',
     router,
+    store,
     render: h => h(App)
 });

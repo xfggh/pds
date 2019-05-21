@@ -43,6 +43,9 @@ export default {
         HotList
     },
     mounted() {
+        
+        this.$store.dispatch('reqHomeCarousel');
+
         new Swiper ('.swiper-container', {
 
             loop: true, // 循环模式选项
