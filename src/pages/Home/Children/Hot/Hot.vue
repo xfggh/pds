@@ -2,16 +2,10 @@
     <div class="hot">
         <!-- 轮播图 -->
         <div class="swiper-container">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="../../imgs/rowing/s1.png" alt="" width="100%"></div>
-                <div class="swiper-slide"><img src="../../imgs/rowing/s2.png" alt="" width="100%"></div>
-                <div class="swiper-slide"><img src="../../imgs/rowing/s3.png" alt="" width="100%"></div>
-                <div class="swiper-slide"><img src="../../imgs/rowing/s4.png" alt="" width="100%"></div>
-                <div class="swiper-slide"><img src="../../imgs/rowing/s5.png" alt="" width="100%"></div>
-                <div class="swiper-slide"><img src="../../imgs/rowing/s6.png" alt="" width="100%"></div>
-                <div class="swiper-slide"><img src="../../imgs/rowing/s7.png" alt="" width="100%"></div>
-                <div class="swiper-slide"><img src="../../imgs/rowing/s8.png" alt="" width="100%"></div>
-                <div class="swiper-slide"><img src="../../imgs/rowing/s9.png" alt="" width="100%"></div>
+            <div class="swiper-wrapper" v-if="homecarousel.length > 0">
+                <div class="swiper-slide" v-for="(carousel, index) in homecarousel" :key="index">
+                    <img :src="carousel.imgurl" alt="" width="100%">
+                </div>
             </div>
             <!-- 如果需要分页器 -->
             <div class="swiper-pagination"></div>
@@ -36,22 +30,45 @@ import 'swiper/dist/css/swiper.min.css';
 import HotList from './HotList'
 
 import HotNav from './HotNav';
+
+import { mapState } from 'vuex';
 export default {
     name: "Hot",
     components: {
         HotNav,
         HotList
     },
+    computed:{
+        ...mapState(['homecarousel'])
+    },
     mounted() {
-        new Swiper ('.swiper-container', {
+        // 调用 获取首页轮播图的方法
+        this.$store.dispatch('reqHomeCarousel');
 
-            loop: true, // 循环模式选项
-            
-            // 如果需要分页器
-            pagination: {
-                el: '.swiper-pagination',
-            }
-        }) 
+        // 调用 获取首页导航图片的 方法
+        this.$store.dispatch("reqHomeNav");
+
+        // 调用 获取首页商品列表 方法
+        this.$store.dispatch("reqHomeShopList");
+
+    },
+    watch:{
+        homecarousel(){
+            this.$nextTick(()=>{
+                new Swiper ('.swiper-container', {
+                    autoplay: {
+                        delay: 2000,
+                        // 解决手动滑动后自动滑动失效的问题
+                        disableOnInteraction: false
+                    },
+                    loop: true, // 循环模式选项
+                    // 如果需要分页器
+                    pagination: {
+                        el: '.swiper-pagination',
+                    }
+                }) 
+            })
+        }
     }
 }
 </script>

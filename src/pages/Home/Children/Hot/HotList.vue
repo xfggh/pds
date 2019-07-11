@@ -1,50 +1,17 @@
 <template>
     <div class="hot-list">
-        <ul class="shop-list">
-            <li class="shop-list-item">
+        <ul class="shop-list" v-if="homeshoplist.length > 0">
+            <li class="shop-list-item" v-for="(item, index) in homeshoplist" :key="index">
                 <div class="item-right">
-                    <img src="./../../imgs/shop_list/shop_item.png" alt="">
+                    <img :src="item.image_url" alt="">
                 </div>
                 <div class="item-left">
-                    <span class="item-title">【19.95元抢1000件，抢完恢复28.9元】牛仔裤女韩版学生高腰破洞百搭哈伦裤2019新款宽松显瘦九分裤</span>
+                    <span class="item-title">{{ item.goods_name }}</span>
                     <div class="item-left-bottom">
-                        <span class="item-price">￥19.95</span>
-                        <span class="item-count">已拼619件</span>
+                        <span class="item-price">￥{{ item.normal_price/100 }}</span>
+                        <span class="item-count">{{ item.sales_tip }}</span>
                         <span class="item-user">
-                            <img src="./../../imgs/shop_list/user1.jpg" alt="">
-                            <img src="./../../imgs/shop_list/user2.jpg" alt="">
-                        </span>
-                    </div>
-                </div>
-            </li>
-            <li class="shop-list-item">
-                <div class="item-right">
-                    <img src="./../../imgs/shop_list/shop_item.png" alt="">
-                </div>
-                <div class="item-left">
-                    <span class="item-title">【19.95元抢1000件，抢完恢复28.9元】牛仔裤女韩版学生高腰破洞百搭哈伦裤2019新款宽松显瘦九分裤</span>
-                    <div class="item-left-bottom">
-                        <span class="item-price">￥19.95</span>
-                        <span class="item-count">已拼619件</span>
-                        <span class="item-user">
-                            <img src="./../../imgs/shop_list/user1.jpg" alt="">
-                            <img src="./../../imgs/shop_list/user2.jpg" alt="">
-                        </span>
-                    </div>
-                </div>
-            </li>
-            <li class="shop-list-item">
-                <div class="item-right">
-                    <img src="./../../imgs/shop_list/shop_item.png" alt="">
-                </div>
-                <div class="item-left">
-                    <span class="item-title">【19.95元抢1000件，抢完恢复28.9元】牛仔裤女韩版学生高腰破洞百搭哈伦裤2019新款宽松显瘦九分裤</span>
-                    <div class="item-left-bottom">
-                        <span class="item-price">￥19.95</span>
-                        <span class="item-count">已拼619件</span>
-                        <span class="item-user">
-                            <img src="./../../imgs/shop_list/user1.jpg" alt="">
-                            <img src="./../../imgs/shop_list/user2.jpg" alt="">
+                            <img :src="user.avatar" alt="" v-for="(user, index) in item.bubble" :key="index">
                         </span>
                     </div>
                 </div>
@@ -54,8 +21,13 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
-    name: "HotList"
+    name: "HotList",
+
+    computed:{
+        ...mapState(['homeshoplist'])
+    }
 }
 </script>
 
@@ -73,6 +45,8 @@ export default {
             display flex
             justify-content space-between
             .item-right
+                display flex
+                align-items center
                 img
                     width 100%
                 flex 1
@@ -87,6 +61,7 @@ export default {
                     height 44px
                     overflow hidden
                 .item-left-bottom
+                    margin-top 30px
                     display flex
                     justify-content space-between
                     align-items center

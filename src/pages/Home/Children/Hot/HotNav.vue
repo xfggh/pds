@@ -1,72 +1,11 @@
 <template>
     <div class="hot-nav">
         <div class="hot-nav-content">
-            <div class="content-inner">
-                <a class="inner-item">
-                    <img src="./../../imgs/nav/nav_icon01.png" alt="">
-                    <span>限时秒杀</span>
+            <div class="content-inner" v-if="homenav.length > 0">
+                <a class="inner-item" v-for="(nav, index) in homenav" :key="index">
+                    <img :src="nav.iconurl" alt="">
+                    <span>{{ nav.icontitle }}</span>
                 </a>
-                <a class="inner-item">
-                    <img src="./../../imgs/nav/nav_icon01.png" alt="">
-                    <span>限时秒杀</span>
-                </a>
-                <a class="inner-item">
-                    <img src="./../../imgs/nav/nav_icon01.png" alt="">
-                    <span>限时秒杀</span>
-                </a>
-                <a class="inner-item">
-                    <img src="./../../imgs/nav/nav_icon01.png" alt="">
-                    <span>限时秒杀</span>
-                </a>
-                <a class="inner-item">
-                    <img src="./../../imgs/nav/nav_icon01.png" alt="">
-                    <span>限时秒杀</span>
-                </a>
-                <a class="inner-item">
-                    <img src="./../../imgs/nav/nav_icon01.png" alt="">
-                    <span>限时秒杀</span>
-                </a>
-                <a class="inner-item">
-                    <img src="./../../imgs/nav/nav_icon01.png" alt="">
-                    <span>限时秒杀</span>
-                </a>
-                <a class="inner-item">
-                    <img src="./../../imgs/nav/nav_icon01.png" alt="">
-                    <span>限时秒杀</span>
-                </a>
-                <a class="inner-item">
-                    <img src="./../../imgs/nav/nav_icon01.png" alt="">
-                    <span>限时秒杀</span>
-                </a>
-                <a class="inner-item">
-                    <img src="./../../imgs/nav/nav_icon01.png" alt="">
-                    <span>限时秒杀</span>
-                </a>
-                <a class="inner-item">
-                    <img src="./../../imgs/nav/nav_icon01.png" alt="">
-                    <span>限时秒杀</span>
-                </a>
-                <a class="inner-item">
-                    <img src="./../../imgs/nav/nav_icon01.png" alt="">
-                    <span>限时秒杀</span>
-                </a>
-                <a class="inner-item">
-                    <img src="./../../imgs/nav/nav_icon01.png" alt="">
-                    <span>限时秒杀</span>
-                </a>
-                <a class="inner-item">
-                    <img src="./../../imgs/nav/nav_icon01.png" alt="">
-                    <span>限时秒杀</span>
-                </a>
-                <a class="inner-item">
-                    <img src="./../../imgs/nav/nav_icon01.png" alt="">
-                    <span>限时秒杀</span>
-                </a>
-                <a class="inner-item">
-                    <img src="./../../imgs/nav/nav_icon01.png" alt="">
-                    <span>限时秒杀</span>
-                </a>
-
             </div>
         </div>
         <div class="hot-nav-bottom">
@@ -76,6 +15,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
     name: "HotNav",
     data(){
@@ -98,12 +38,14 @@ export default {
         }
     },
     mounted(){
+        
         this.getBarXWidth();
 
         // 移动端事件监听
         this.bindEvent();
     },
     computed: {
+        ...mapState(['homenav']),
         bottomInnerStyle(){
             return {
                 width: `${this.barXWidth}px`,
@@ -124,21 +66,21 @@ export default {
         // 触摸开始
         handleTouchStart(event){
             console.log("触摸开始");
-            console.log("触点列表->", event.touches);
+            //console.log("触点列表->", event.touches);
             // 获取触点
             let touch = event.touches[0];
             // 获取起点
             this.startX = Number(touch.pageX);
-            console.log("起点->", this.startX);
+            //console.log("起点->", this.startX);
         },
         // 开始移动
         handleTouchMove(){
-            console.log("开始移动");
+            //console.log("开始移动");
             
             let touch = event.touches[0];
             // 移动距离
             let moveLen = -(Number(touch.pageX) - this.startX);
-            console.log("moveLen->", moveLen);
+            //console.log("moveLen->", moveLen);
             // 求出滚动条走的距离
             this.barMoveX = (this.bgBarW/this.scrollContentW) * moveLen + this.endX;
             // 边界处理
@@ -147,13 +89,13 @@ export default {
             }else if((this.bgBarW - this.barXWidth) < this.barMoveX){
                 this.barMoveX = this.bgBarW - this.barXWidth;
             }
-            console.log("滚动条走的距离->", this.barMoveX);
+            //console.log("滚动条走的距离->", this.barMoveX);
         },
         // 触摸结束
         handleTouchEnd(){
             console.log("触摸结束");
             this.endX = this.barMoveX;
-            console.log("结束点->", this.endX);
+            //console.log("结束点->", this.endX);
         },
 
 
