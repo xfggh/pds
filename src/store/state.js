@@ -1,5 +1,9 @@
 export default{
 
     // 首页轮播图
-    homecarousel: []
+    homecarousel: [],
+    // 首页导航
+    homenav: [],
+    // 首页商品列表
+    homeshoplist: []
 }

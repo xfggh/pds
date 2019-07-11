@@ -2,7 +2,7 @@
 
 1. 项目结构
 
-2. 
+2. 项目启动
 
 # 安装
 
@@ -26,3 +26,10 @@ npm install stylus stylus-loader --save-dev
 ```node
 npm i ly-tab -S
 ```
+
+- Swiper 轮播图
+
+
+## 记录 bug
+1. 轮播图 bug  
+    可以 自动轮播，但是我一手动滑动就不会自动轮播了
