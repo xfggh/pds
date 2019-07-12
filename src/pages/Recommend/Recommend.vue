@@ -1,23 +1,19 @@
 <template>
     <div class="recommend-container" v-if="recommendshoplist.length > 0">
         <ul class="recommend">
-            <li class="recommend-item" v-for="(item, index) in recommendshoplist" :key="index">
-                <img :src="item.thumb_url" alt="" width="100%" v-if="item.thumb_url">
-                <h4 class="item-title">{{ item.short_name }}</h4>
-                <div class="item-bottom">
-                    <span class="item-price">￥{{item.price / 100}}</span>
-                    <span class="item-salestip">{{item.sales_tip}}</span>
-                    <button class="item-btn">发现 ></button>
-                </div>
-            </li>
+            <ShopList v-for="(item, index) in recommendshoplist" :item=item :key="index" />
         </ul>
     </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import ShopList from '../../components/ShopList/ShopList'
 export default {
     name: 'Recommend',
+    components:{
+        ShopList
+    },
     mounted(){
         this.$store.dispatch('reqRecommendShopList');
     },
@@ -37,39 +33,4 @@ export default {
         display flex
         flex-wrap wrap
         margin-bottom 50px
-        .recommend-item:nth-child(2n-1)
-            margin-right 1%
-        .recommend-item
-            width 49.5%
-            background-color #fff
-            margin-bottom 10px
-            padding-bottom 10px
-            .item-title
-                font-size 14px
-                height 20px
-                line-height 20px
-                overflow hidden
-                margin 5px
-            .item-bottom
-                display flex
-                align-items center
-                margin 0 0 0 5px
-                .item-price
-                    flex 1
-                    font-size 14px
-                    font-weight bold
-                    color red
-                .item-salestip
-                    flex 2
-                    font-size 10px
-                    color #666
-                .item-btn
-                    flex 1
-                    border 1px solid #F1F1F1
-                    border-right none
-                    border-radius 10px 0 0 10px
-                    background-color transparent
-                    color #666
-
-
 </style>
