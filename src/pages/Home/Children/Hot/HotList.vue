@@ -3,7 +3,7 @@
         <ul class="shop-list" v-if="homeshoplist.length > 0">
             <li class="shop-list-item" v-for="(item, index) in homeshoplist" :key="index">
                 <div class="item-right">
-                    <img :src="item.image_url" alt="">
+                    <img :src="item.hd_thumb_url" alt="">
                 </div>
                 <div class="item-left">
                     <span class="item-title">{{ item.goods_name }}</span>
