@@ -33,3 +33,6 @@ npm i ly-tab -S
 ## 记录 bug
 1. 轮播图 bug  
     可以 自动轮播，但是我一手动滑动就不会自动轮播了
+
+2. Search.vue 23行
+    WebSocket connection to 'ws://localhost:8081/sockjs-node/466/tcrkbaoa/websocket' failed: WebSocket is closed before the connection is established
