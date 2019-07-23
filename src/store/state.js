@@ -1,9 +1,17 @@
 export default{
 
-    // 首页轮播图
+    // 首页 轮播图
     homecarousel: [],
-    // 首页导航
+    
+    // 首页 导航
     homenav: [],
-    // 首页商品列表
-    homeshoplist: []
+
+    // 首页 商品列表
+    homeshoplist: [],
+
+    // 推荐 页商品列表
+    recommendshoplist: [],
+
+    // 搜索 页
+    searchgoods:[]
 }
