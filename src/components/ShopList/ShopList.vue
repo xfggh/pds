@@ -36,7 +36,7 @@ export default {
     .item-bottom
         display flex
         align-items center
-        margin 0 0 0 5px
+        margin 0 0 0 3px
         .item-price
             flex 1
             font-size 14px
@@ -44,7 +44,7 @@ export default {
             color red
         .item-salestip
             flex 2
-            font-size 10px
+            font-size 12px
             color #666
         .item-btn
             flex 1
@@ -53,4 +53,6 @@ export default {
             border-radius 10px 0 0 10px
             background-color transparent
             color #666
+            font-size 12px
+            padding 1px 3px
 </style>
