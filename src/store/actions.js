@@ -21,7 +21,7 @@ export default{
     async reqHomeCarousel({commit}){
         const result = await getHomeCarousel();
 
-        commit(HOME_CAROUSEL, {homecarousel: result.message.data})
+        commit(HOME_CAROUSEL, {homecarousel: result.message})
     },
 
     // 获取 首页 的导航
