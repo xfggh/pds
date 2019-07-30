@@ -12,6 +12,7 @@
     "better-scroll": "^1.15.2",
     "core-js": "^2.6.5",
     "ly-tab": "^2.1.2",
+    "mint-ui": "^2.2.13",
     "swiper": "^4.5.0",
     "vue": "^2.6.10",
     "vue-router": "^3.0.6",

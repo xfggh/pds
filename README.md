@@ -32,6 +32,9 @@ npm i ly-tab -S
 - better-scroll | 滚动
     npm install better-scroll --save
 
+- mint-ui
+     npm i mint-ui -S
+
 
 ## 记录 bug
 1. 轮播图 bug  
