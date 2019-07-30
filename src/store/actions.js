@@ -38,9 +38,11 @@ export default{
     },
 
     // 获取 推荐 页商品列表
-    async reqRecommendShopList({commit}){
-        const result = await getRecommendShopList();
-        commit(RECOMMEND_SHOP_LIST, {recommendshoplist: result.message.data})
+    async reqRecommendShopList({commit}, params){
+        const result = await getRecommendShopList(params);
+        commit(RECOMMEND_SHOP_LIST, {recommendshoplist: result.message});
+
+        params.callback && params.callback();
     },
 
     // 获取 搜索 页商品列表

@@ -13,7 +13,7 @@ export const getHomeNav = ()=>_ajax('/api/homenav');
 export const getHomeShopList = ()=>_ajax('/api/homeshoplist');
 
 // 请求 推荐 页商品列表
-export const getRecommendShopList = ()=>_ajax('/api/recommendshoplist');
+export const getRecommendShopList = (params)=>_ajax('/api/recommendshoplist', params);
 
 // 请求 搜索 页数据
 export const getSearchGoods = ()=>_ajax('/api/searchgoods');
