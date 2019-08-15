@@ -18,3 +18,8 @@ export const getRecommendShopList = (params)=>_ajax('/api/recommendshoplist', pa
 // 请求 搜索 页数据
 export const getSearchGoods = ()=>_ajax('/api/searchgoods');
 
+// 获取 短信验证码
+export const getSmsCode = (phone)=>_ajax('/api/getsmscode',{ phone });
+
+// 短信 验证码 登录
+export const loginBySmsCode = (phone, smsCode)=>_ajax('/api/loginbysmscode',{ phone, smsCode }, 'POST');

@@ -11,7 +11,8 @@ import {
     HOME_NAV,
     HOME_SHOP_LIST,
     RECOMMEND_SHOP_LIST,
-    SEARCH_GOODS
+    SEARCH_GOODS,
+    USER_INFO
 } from './mutation-types'
 
 export default{
@@ -51,6 +52,11 @@ export default{
         commit(SEARCH_GOODS, {searchgoods: result.message.data});
 
         callback && callback();
+    },
+
+    // 保存用户信息到 vuex
+    saveUserInfo({commit}, userInfo){
+        commit(USER_INFO, {userInfo});
     }
 
 

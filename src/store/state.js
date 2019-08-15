@@ -13,5 +13,8 @@ export default{
     recommendshoplist: [],
 
     // 搜索 页
-    searchgoods:[]
+    searchgoods:[],
+
+    // 用户信息
+    userInfo: {}
 }

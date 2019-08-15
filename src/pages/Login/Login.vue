@@ -13,8 +13,8 @@
                 <button v-else disabled>已发送({{countDown}} s)</button>
             </div>
             <div class="input-group">
-                <label for="verifycode"><img src="./images/pass.png" alt="" width="25"></label>
-                <input type="text" name="verifycode">
+                <label for="smscode"><img src="./images/pass.png" alt="" width="25"></label>
+                <input type="text" name="smscode" v-model="smscode">
             </div>
         </div>
         <div class="login-sms" :class="{ current: !loginMode }">
@@ -36,39 +36,54 @@
 
         </div>
         <div class="login-footer">
-            <button>同意协议并登录</button>
+            <button @click.prevent="login">同意协议并登录</button>
             <button>返回</button>
         </div>
     </div>
 </template>
 
 <script>
+import { getSmsCode, loginBySmsCode } from '../../api/index'
+import { Toast } from 'mint-ui'
+
+import { mapActions } from 'vuex'
+
 export default {
     name: "Login",
     data(){
         return{
             loginMode: true, // true - 验证码登录，false - 密码登录
             phone: '', // 手机号
+            smscode: '', // 验证码
             countDown: 0, // 验证码倒计时
             pwdMode: true, // true - 不显示密码
-            password: ''
+            password: '',
+            userInfo: {}
         }
     },
     methods:{
+        ...mapActions(['saveUserInfo']),
+
         // 1. 切换 登录方式
         switchLoginMode(flag){
             this.loginMode = flag;
         },
 
-        // 2. 获取验证码
-        getVerifyCode(){
+        // 2. 获取短信验证码
+        async getVerifyCode(){
+            // 2.1 开始倒计时
             this.countDown = 6;
             this.intervalId = setInterval(()=>{
                 this.countDown--;
                 if(this.countDown === 0){
                     clearInterval(this.intervalId);
                 }
-            }, 1000)
+            }, 1000);
+
+            // 2.2 获取短信验证码
+            let smsCode = await getSmsCode(this.phone);
+            console.log(smsCode);
+
         },
 
         // 3. 密码显示方式
@@ -79,6 +94,48 @@ export default {
         // 4. 获取图片验证码
         getCaptcha(){
             this.$refs.captcha.src = 'http://localhost:3000/api/getverifycode?time=' + new Date();
+        },
+
+        // 5. 登录
+        async login(){
+            if(this.loginMode){ // 验证码登录
+                // 5.1 校验前台数据
+                if(!this.phone){
+                    Toast('请输入手机号码!');
+                    return;
+                }
+                if(!this.phoneRight){
+                    Toast('请输入正确的手机号!');
+                    return;
+                }
+                if(!this.smscode){
+                    Toast('请输入验证码!');
+                    return;
+                }
+                if(!/^\d{6}$/gi.test(this.smscode)){
+                    Toast('请输入正确的验证码!');
+                    return;
+                }
+                let results = await loginBySmsCode(this.phone, this.smscode);
+                console.log(results);
+
+                if(results.code === 200){ // 登录成功
+                    this.userInfo = results.data;
+                }else{
+                    this.userInfo = {msg: '登录失败!原因不知道'}
+                }
+            }else{ // 密码登录
+
+            }
+
+            if(!this.userInfo.id){
+                Toast(this.userInfo.msg);
+            }else{
+                // 保存登录成功的用户信息
+                this.saveUserInfo(this.userInfo);
+                // 返回主界面
+                this.$router.back();
+            }
         }
     },
     computed:{
