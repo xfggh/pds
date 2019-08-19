@@ -13,3 +13,6 @@ export const RECOMMEND_SHOP_LIST = 'recommend_shop_list'
 
 // 搜索 页
 export const SEARCH_GOODS = 'search_goods'
+
+// 用户信息
+export const USER_INFO = 'user_info'

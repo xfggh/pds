@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <router-view></router-view>
-        <TabBar />
+        <TabBar v-show="$route.meta.showTabbar===false?false:true" />
     </div>
 </template>
 
@@ -12,6 +12,9 @@
         name: "App",
         components: {
             TabBar,
+        },
+        mounted(){
+            this.$store.dispatch('getUserInfo');
         }
     }
 </script>

@@ -32,6 +32,12 @@ npm i ly-tab -S
 - better-scroll | 滚动
     npm install better-scroll --save
 
+- mint-ui
+     npm i mint-ui -S
+    
+- babel-plugin-component | 解决 引入 mint-ui 不生效的问题
+    npm install babel-plugin-component -D
+
 
 ## 记录 bug
 1. 轮播图 bug  

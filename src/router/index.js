@@ -8,6 +8,7 @@ import Recommend from './../pages/Recommend/Recommend';
 import Search from './../pages/Search/Search';
 import Chat from './../pages/Chat/Chat';
 import Me from './../pages/Me/Me';
+import Login from './../pages/Login/Login'
 
 import Hot from './../pages/Home/Children/Hot/Hot'
 import Box from './../pages/Home/Children/Box'
@@ -67,6 +68,13 @@ export default new VueRouter({
         {
             path: '/me',
             component: Me
+        },
+        {
+            path: '/login',
+            component: Login,
+            meta: {
+                showTabbar: false
+            }
         },
         {
             path: '/',
