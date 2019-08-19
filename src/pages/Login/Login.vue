@@ -8,7 +8,7 @@
         <div class="login-sms" :class="{ current: loginMode }">
             <div class="input-group">
                 <label for="phone"><img src="./images/iphone.png" alt="" width="25"></label>
-                <input type="text" name="phone" v-model="phone">
+                <input type="text" name="phone" v-model="phone" placeholder="手机号">
                 <button v-if="!countDown" :disabled="!phoneRight" :class="{ 'phone-right': phoneRight }" @click="getVerifyCode">获取验证码</button>
                 <button v-else disabled>已发送({{countDown}} s)</button>
             </div>
@@ -20,17 +20,17 @@
         <div class="login-sms" :class="{ current: !loginMode }">
             <div class="input-group">
                 <label for="phone"><img src="./images/iphone.png" alt="" width="25"></label>
-                <input type="text" name="phone">
+                <input type="text" name="phone" v-model="username" placeholder="用户名/手机号">
             </div>
             <div class="input-group">
                 <label for="password"><img src="./images/pass.png" alt="" width="25"></label>
-                <input type="password" name="password" v-if="pwdMode">
-                <input type="text" name="password" v-else>
+                <input type="password" name="password" v-model="password" v-if="pwdMode" placeholder="密码">
+                <input type="text" name="password" v-model="password" v-else  placeholder="密码">
                 <img src="./images/show_pwd.png" alt="" width="25" v-if="pwdMode" @click="switchPwdMode(false)">
                 <img src="./images/hide_pwd.png" alt="" width="25" v-else  @click="switchPwdMode(true)">
             </div>
             <div class="input-group">
-                <input type="text" name="vcode">
+                <input type="text" name="vcode" v-model="vcode" placeholder="验证码">
                 <img ref="captcha" @click="getCaptcha" src="http://localhost:3000/api/getverifycode" alt="" height="40">
             </div>
 
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { getSmsCode, loginBySmsCode } from '../../api/index'
+import { getSmsCode, loginBySmsCode, loginByPwd } from '../../api/index'
 import { Toast } from 'mint-ui'
 
 import { mapActions } from 'vuex'
@@ -53,11 +53,13 @@ export default {
     data(){
         return{
             loginMode: true, // true - 验证码登录，false - 密码登录
-            phone: '', // 手机号
-            smscode: '', // 验证码
             countDown: 0, // 验证码倒计时
             pwdMode: true, // true - 不显示密码
-            password: '',
+            phone: '', // 手机号
+            smscode: '', // 短信验证码
+            username: '', // 用户名
+            password: '', // 密码
+            vcode: '', // 图片验证码
             userInfo: {}
         }
     },
@@ -98,6 +100,7 @@ export default {
 
         // 5. 登录
         async login(){
+            let results = {};
             if(this.loginMode){ // 验证码登录
                 // 5.1 校验前台数据
                 if(!this.phone){
@@ -116,19 +119,33 @@ export default {
                     Toast('请输入正确的验证码!');
                     return;
                 }
-                let results = await loginBySmsCode(this.phone, this.smscode);
+                results = await loginBySmsCode(this.phone, this.smscode);
                 console.log(results);
-
-                if(results.code === 200){ // 登录成功
-                    this.userInfo = results.data;
-                }else{
-                    this.userInfo = {msg: '登录失败!原因不知道'}
-                }
             }else{ // 密码登录
+                // 5.2 校验前台数据
+                if(!this.username){
+                    Toast('请输入用户名/手机号!');
+                    return;
+                }
+                if(!this.password){
+                    Toast('请输入密码!');
+                    return;
+                }
+                if(!this.vcode){
+                    Toast('请输入验证码!');
+                    return;
+                }
+                results = await loginByPwd(this.username, this.password, this.vcode);
+            }
 
+            if(results.code === 200){ // 登录成功
+                this.userInfo = results.data;
+            }else{
+                this.userInfo = {msg: results.msg}
             }
 
             if(!this.userInfo.id){
+                console.log(1);
                 Toast(this.userInfo.msg);
             }else{
                 // 保存登录成功的用户信息

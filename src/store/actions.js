@@ -3,7 +3,8 @@ import {
     getHomeNav,
     getHomeShopList,
     getRecommendShopList,
-    getSearchGoods
+    getSearchGoods,
+    getUserInfo
 } from './../api/index'
 
 import {
@@ -57,6 +58,13 @@ export default{
     // 保存用户信息到 vuex
     saveUserInfo({commit}, userInfo){
         commit(USER_INFO, {userInfo});
+    },
+
+    // 获取用户信息
+    async getUserInfo({commit}){
+        const result = await getUserInfo();
+        console.log(result);
+        commit(USER_INFO, {userInfo: result.data});
     }
 
 

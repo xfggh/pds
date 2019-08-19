@@ -23,3 +23,9 @@ export const getSmsCode = (phone)=>_ajax('/api/getsmscode',{ phone });
 
 // 短信 验证码 登录
 export const loginBySmsCode = (phone, smsCode)=>_ajax('/api/loginbysmscode',{ phone, smsCode }, 'POST');
+
+// 密码 登录
+export const loginByPwd = (username, password, vcode)=>_ajax('/api/loginbypwd',{ username, password, vcode }, 'POST');
+
+// 获取用户信息
+export const getUserInfo = ()=>_ajax('/api/getuserinfo');

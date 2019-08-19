@@ -12,6 +12,9 @@
         name: "App",
         components: {
             TabBar,
+        },
+        mounted(){
+            this.$store.dispatch('getUserInfo');
         }
     }
 </script>
